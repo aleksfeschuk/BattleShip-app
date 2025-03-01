@@ -1,0 +1,31 @@
+*,
+*::before,
+*::after{
+    padding: 0;
+    margin: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+*::before,
+*::after{
+    display: inline-block;
+}
+
+h1
+{
+    text-align: center;
+    font-size: 40px;
+    padding: 20px 0;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+html, 
+body {
+    block-size: 100%;
+}

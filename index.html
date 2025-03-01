@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sea Battle</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,regular,500,600,700,800,900" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div class="wrapper">
+        <header>
+            <h1>BattleShip</h1>
+        </header>
+    
+        <main>
+            <div class="game__container">
+                <div class="board-container">
+                    <div class="player-board">
+                        <h2>Player</h2>
+                        <div class="grid player-grid"></div>
+                    </div>
+                    <div class="computer-board">
+                        <h2>Computer</h2>
+                        <div class="grid computer-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button id="placeShips" class="button random">Randomly</button>
+                <button id="startGame" class="button start-game">Start game</button>
+            </div>
+        </main>
+    </div>
+
+
+
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
