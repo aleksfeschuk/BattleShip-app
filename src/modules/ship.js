@@ -6,11 +6,14 @@ export class Ship {
     }
 
     setPosition(row, col, isHorizontal) {
-        this.positions = [];
+        if (!Array.isArray(this.positions)) {
+            this.positions = [];
+        }
+        this.positions.length = 0;
         for(let i = 0; i < this.size; i++) {
             const r = isHorizontal ? row : row + i;
             const c = isHorizontal ? col + i : col;
-            this.isHorizontal.push([r, c]);
+            this.positions.push([r, c]);
         }
     }
 

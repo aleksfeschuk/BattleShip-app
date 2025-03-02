@@ -1,6 +1,9 @@
+import { Ship } from "./ship.js";
+
 export class GameDisplay {
-    constructor(gridElement) {
+    constructor(gridElement, board) {
         this.gridElement = gridElement;
+        this.board = board;
     }
 
     createGrid() {
@@ -15,16 +18,37 @@ export class GameDisplay {
         }
     }
 
-    updateCell(row, col, state) {
+    updateGrid(showShips = false) {
         const cells = this.gridElement.querySelectorAll('.cell');
-        const cell = Array.from(cells).find(
-            c => parseInt(c.dataset.row) === row && parseInt(c.dataset.col) === col
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            cell.classList.remove('ship', 'hit', 'miss');
+            const cellContent = this.board.getCell(row, col);
+            if (showShips && cellContent instanceof Ship) {
+                cell.classList.add('ship');
+            }
+            if (cellContent?.hits > 0) {
+                cell.classList.add('hit');
+            } else if (cellContent === null && cell.dataset.attacked) {
+                cell.classList.add('miss');
+            }
+        });
+    }
+
+
+    markAttack(row, col, hit) {
+        const cell = this.gridElement.querySelector(
+            `.cell[data-row="${row}"][data-col="${col}"]`
         );
-        if (state === 'ship') cell.classList.add('ship');
+        cell.dataset.attacked = true;
+        cell.classList.add(hit ? 'hit' : 'miss');
     }
 
     clearGrid() {
-        this.gridElement.querySelectorAll('.ship').forEach(
-            cell => cell.classList.remove('ship'));
+        this.gridElement.querySelectorAll('.ship', '.hit', '.miss').forEach(cell =>  {
+                cell.classList.remove('ship', 'hit', 'miss');
+                delete cell.dataset.attacked
+        });
     }
 }

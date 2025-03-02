@@ -66,8 +66,20 @@ body {
 .cell {
     width: 40px;
     height: 40px;
-    background-color: #333;
-    border: 1px solid #fff;
+    background-color: #fff;
+    border: 1px solid #000;
+}
+
+.cell.ship {
+    background-color: #0000ff;
+}
+
+.cell.hit {
+    background-color: #ff0000;
+}
+
+.cell.miss {
+    background-color: #e6b800;
 }
 
 

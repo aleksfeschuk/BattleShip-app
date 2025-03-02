@@ -1,13 +1,14 @@
 import { Ship } from './ship.js';
 
 export class Board {
-    constructor() {
+    constructor(shipSizes = [4, 3, 3, 2, 1]) {
         this.grid = Array(10).fill().map(() => Array(10).fill(null));
         this.ships = [];
-        this.shipSizes = [4, 3, 3, 2, 1];
+        this.shipSizes = shipSizes;
     }
 
     canPlaceShip(row, col, size, isHorizontal) {
+        const buffer = 2;
         for(let i = 0; i < size; i++) {
             const r = isHorizontal ? row : row + i;
             const c = isHorizontal ? col + i : col;
@@ -24,7 +25,7 @@ export class Board {
             const row = Math.floor(Math.random() * 10);
             const col = Math.floor(Math.random() * 10);
             if (this.canPlaceShip(row, col, size, isHorizontal)) {
-                ship.setPosition(row, col, isHorizontal);
+                ship.setPosition.call(ship, row, col, isHorizontal);
                 ship.positions.forEach(([r, c]) => this.grid[r][c] = ship);
                 this.ships.push(ship);
                 placed = true;

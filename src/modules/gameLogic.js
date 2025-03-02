@@ -1,44 +1,40 @@
-export class GameLogic {
-    constructor(gridElement) {
-        this.gridElement = gridElement;
-        this.shipSizes = [4, 3, 3, 2, 1];
+export class BattleLogic {
+    constructor(player, computer) {
+        this.player = player;
+        this.computer = computer;
     }
 
-    canPlaceShip(row, col, size, isHorizontal) {
-        const cells = this.gridElement.querySelectorAll('.cell');
-        for (let i = 0; i < size; i++) {
-            const r = isHorizontal ? row : row + i;
-            const c = isHorizontal ? col + i : col;
-            if (r >= 10 || c >= 10) return false;
-            const cell = Array.from(cells).find(
-                c => parseInt(c.dataset.row) === r && parseInt(c.dataset.col) === c
-            );
-            if (cell.classList.contains('ship')) return false;
+    initialize() {
+        this.player.board.ships = [];
+        this.player.board.grid = Array(10).fill().map(() => Array(10).fill(null));
+        this.computer.board.ships = [];
+        this.computer.board.grid = Array(10).fill().map(() => Array(10).fill(null));
+
+        this.player.setupShips();
+        this.computer.setupShips();
+        this.player.setEnemyBoard(this.computer.board);
+        this.computer.setEnemyBoard(this.player.board);
+    }
+
+    computerTurn() {
+        let row, col;
+        do {
+            row = Math.floor(Math.random() * 10);
+            col = Math.floor(Math.random() * 10);
+        } while (this.player.board.getCell(row, col)?.hit)
+        const target = this.player.board.getCell(row, col);
+        if (target instanceof Ship) {
+            target.hit(row, col)
         }
-        return true;
-    }
+        return { row, col, hit: !!target };
+    } 
 
-    placeShip(size) {
-        let placed = false;
-        while (!placed) {
-            const isHorizontal = Math.random() > 0.5;
-            const row = Math.floor(Math.random() * 10);
-
-            if (this.canPlaceShip(row, col, size, isHorizontal)) {
-                const cells = this.gridElement.querySelectorAll('.cell');
-                for(let i = 0; i < size; i++) {
-                    const r = isHorizontal ? row : row + i;
-                    const c = isHorizontal ? col + i : col;
-                    const cell = Array.from(cells).find(
-                        c => parseInt(c.dataset.row) ===  r && parseInt(c.dataset.col) === c
-                    );
-                    cell.classList.add('ship'); 
-                }
-                placed = true;
-            }
+    playerTurn(row, col) {
+        const target = this.computer.board.getCell(row, col);
+        if (target?.hit) return null;
+        if (target instanceof Ship) {
+            target.hit(row, col);
         }
-    }
-    placeAllShips() {
-        this.shipSizes.forEach(size => this.placeShip(size));
+        return { row, col, hit: !!target};
     }
 }
