@@ -25,18 +25,21 @@ export class EventManager {
         const cells = this.computerDisplay.gridElement.querySelectorAll('.cell');
         cells.forEach(cell => {
             cell.addEventListener('click', () => {
+                if (!this.battleLogic.gameActive) return;
                 const row = parseInt(cell.dataset.row);
                 const col = parseInt(cell.dataset.col);
-                const result = this.battleLogic.playerTurn(row, col);
-                if (result) {
-                    this.computerDisplay.markAttack(result.row, result.col, result.hit);
+                const playerResult = this.battleLogic.playerTurn(row, col);
+                if (playerResult) {
+                    this.computerDisplay.markAttack(playerResult.row, playerResult.col, playerResult.hit);
 
                     setTimeout(() => {
                         const compResult = this.battleLogic.computerTurn();
-                        this.playerDisplay.markAttack(compResult.row, compResult.col, compResult.hit)
+                        if (compResult) {
+                            this.playerDisplay.markAttack(compResult.row, compResult.col, compResult.hit)
+                        }    
                     }, 1000);
                 }
-            })
+            });
         });
     }
 
