@@ -1,7 +1,7 @@
 import { Ship } from './ship.js';
 
 export class Board {
-    constructor(shipSizes = [4, 3, 3, 2, 1]) {
+    constructor(shipSizes = [5, 4, 3, 2, 1]) {
         this.grid = Array(10).fill().map(() => Array(10).fill(null));
         this.ships = [];
         this.shipSizes = shipSizes;
@@ -12,7 +12,20 @@ export class Board {
         for(let i = 0; i < size; i++) {
             const r = isHorizontal ? row : row + i;
             const c = isHorizontal ? col + i : col;
-            if (r >= 10 || c >= 10 || this.grid[r][c] !== null) return false;
+            if (r >= 10 || c >= 10) return false;
+
+            for(let dr = -buffer; dr <= buffer; dr++) {
+                for(let dc = -buffer; dc <= buffer; dc++) {
+                    const checkRow = r + dr;
+                    const checkCol = c + dc;
+                    if(checkRow >= 0 && checkRow < 10 &&
+                       checkCol >= 0 && checkCol < 10 &&
+                       this.grid[checkRow][checkCol] !== null 
+                    ) {
+                        return false
+                    }
+                }
+            }
         }
         return true;
     }
@@ -20,16 +33,22 @@ export class Board {
     placeShip(size) {
         const ship = new Ship(size);
         let placed = false;
-        while(!placed) {
+        let attempts = 0;
+        const maxAttempts = 100;
+        while(!placed && attempts < maxAttempts) {
             const isHorizontal = Math.random() > 0.5;
             const row = Math.floor(Math.random() * 10);
             const col = Math.floor(Math.random() * 10);
             if (this.canPlaceShip(row, col, size, isHorizontal)) {
-                ship.setPosition.call(ship, row, col, isHorizontal);
+                ship.setPosition(row, col, isHorizontal);
                 ship.positions.forEach(([r, c]) => this.grid[r][c] = ship);
                 this.ships.push(ship);
                 placed = true;
             }
+            attempts++;
+        }
+        if (!placed) {
+            throw new Error("Unable to place ship: not enough space")
         }
     }
 
