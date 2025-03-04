@@ -1,7 +1,7 @@
 import { Ship } from './ship.js';
 
 export class Board {
-    constructor(shipSizes = [5, 4, 3, 2, 1]) {
+    constructor(shipSizes = [5, 4, 3, 2, 2]) {
         this.grid = Array(10).fill().map(() => Array(10).fill(null));
         this.ships = [];
         this.shipSizes = shipSizes;

@@ -6,10 +6,11 @@ export class Ship {
     }
 
     setPosition(row, col, isHorizontal) {
-        if (!Array.isArray(this.positions)) {
-            this.positions = [];
-        }
-        this.positions.length = 0;
+        // if (!Array.isArray(this.positions)) {
+        //     this.positions = [];
+        // }
+        // this.positions.length = 0;
+        this.positions = [];
         for(let i = 0; i < this.size; i++) {
             const r = isHorizontal ? row : row + i;
             const c = isHorizontal ? col + i : col;

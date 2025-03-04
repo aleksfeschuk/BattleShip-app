@@ -102,6 +102,21 @@ button {
     transition: background-color 0.3s ease;
 }
 
+.button.restart {
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ff0000;
+    color: #fff;
+    font-weight: bold;
+}
+
+.button.restart:hover {
+    background-color: #e68a00;
+}
+
 button:hover {
     background-color: #e6b800;
 }
@@ -124,6 +139,12 @@ button:hover {
     .board-container {
         gap: 20px;
     }
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .button {
         font-size: 16px;
         padding: 8px 16px;

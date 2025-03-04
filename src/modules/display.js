@@ -30,7 +30,7 @@ export class GameDisplay {
             }
             if (cellContent?.hits > 0) {
                 cell.classList.add('hit');
-            } else if (cellContent === null && cell.dataset.attacked) {
+            } else if (cell.dataset.attacked) {
                 cell.classList.add('miss');
             }
         });
@@ -46,9 +46,10 @@ export class GameDisplay {
     }
 
     clearGrid() {
-        this.gridElement.querySelectorAll('.ship', '.hit', '.miss').forEach(cell =>  {
-                cell.classList.remove('ship', 'hit', 'miss');
-                delete cell.dataset.attacked
+        const cells = this.gridElement.querySelectorAll('.cell'); 
+        cells.forEach(cell => {
+            cell.classList.remove('ship', 'hit', 'miss');
+            delete cell.dataset.attacked;
         });
     }
 }

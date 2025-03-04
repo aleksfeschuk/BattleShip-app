@@ -16,14 +16,12 @@ const computer = new Player('Computer', true);
 const playerDisplay = new GameDisplay(playerGrid, player.board);
 const computerDisplay = new GameDisplay(computerGrid, computer.board);
 
-const battleLogic = new BattleLogic(player, computer);
-
 // Initialize the meshes
 
 playerDisplay.createGrid();
 computerDisplay.createGrid();
 
 // Setting up event handlers
-
+const battleLogic = new BattleLogic(player, computer);
 const eventManager = new EventManager(playerDisplay, computerDisplay, battleLogic);
 eventManager.setupListeners();
