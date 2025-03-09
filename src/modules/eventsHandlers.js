@@ -51,8 +51,12 @@ export class EventManager {
                             if (winner) {
                                 setTimeout(() => this.battleLogic.endGame(winner), 500);
                             }
+                        } else {
+                            console.log('Computer turn failed');
                         }
                     }, 1000);
+                } else {
+                    console.log('Player turn failed')
                 }
             });
         });

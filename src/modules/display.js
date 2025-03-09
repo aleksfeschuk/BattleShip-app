@@ -28,9 +28,9 @@ export class GameDisplay {
             if (showShips && cellContent instanceof Ship) {
                 cell.classList.add('ship');
             }
-            if (cellContent?.hits > 0) {
+            if (cellContent?.hitPositions?.some(([r, c]) => r === row && c === col)) {
                 cell.classList.add('hit');
-            } else if (cell.dataset.attacked === true) {
+            } else if (cell.dataset.attacked === 'true') { 
                 cell.classList.add('miss');
             }
         });
