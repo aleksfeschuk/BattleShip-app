@@ -22,7 +22,7 @@ export class Board {
                        checkCol >= 0 && checkCol < 10 &&
                        this.grid[checkRow][checkCol] !== null 
                     ) {
-                        return false
+                        return false;
                     }
                 }
             }
@@ -48,7 +48,7 @@ export class Board {
             attempts++;
         }
         if (!placed) {
-            throw new Error("Unable to place ship: not enough space")
+            throw new Error("Unable to place ship: not enough space");
         }
     }
 

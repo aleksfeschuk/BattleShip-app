@@ -30,12 +30,11 @@ export class GameDisplay {
             }
             if (cellContent?.hits > 0) {
                 cell.classList.add('hit');
-            } else if (cell.dataset.attacked) {
+            } else if (cell.dataset.attacked === true) {
                 cell.classList.add('miss');
             }
         });
     }
-
 
     markAttack(row, col, hit) {
         const cell = this.gridElement.querySelector(
