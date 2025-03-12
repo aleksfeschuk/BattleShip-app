@@ -5,6 +5,8 @@ export class Board {
         this.grid = Array(10).fill().map(() => Array(10).fill(null));
         this.ships = [];
         this.shipSizes = shipSizes;
+        this.hits = 0;
+        this.miss = 0;
     }
 
     canPlaceShip(row, col, size, isHorizontal) {
@@ -58,5 +60,13 @@ export class Board {
 
     getCell(row, col) {
         return this.grid[row][col];
+    }
+
+    // reset method
+    reset() { 
+        this.grid.forEach(row => row.fill(null));
+        this.ships = [];
+        this.hits = 0;
+        this.misses = 0;
     }
 }

@@ -42,7 +42,7 @@ header {
 .game__container {
     max-width: 1310px;
     margin-inline: auto;
-    padding: 20px;
+    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;

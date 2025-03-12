@@ -39,7 +39,16 @@ export class EventManager {
                     this.computerDisplay.updateGrid(false);
                     const winner = this.battleLogic.checkWinner();
                     if (winner) {
-                        setTimeout(() => this.battleLogic.endGame(winner), 500);
+                        setTimeout(() =>
+                            this.battleLogic.endGame(winner), 500);
+                            setTimeout(() => {
+                                this.playerDisplay.clearGrid();
+                                this.computerDisplay.clearGrid();
+                                this.battleLogic.restartGame();
+                                this.playerDisplay.updateGrid(true);
+                                this.computerDisplay.updateGrid(false);
+                                this.setupComputerGridClicks();
+                            }, 1000)
                         return;
                     }
                     setTimeout(() => {
@@ -50,6 +59,14 @@ export class EventManager {
                             const winner = this.battleLogic.checkWinner();
                             if (winner) {
                                 setTimeout(() => this.battleLogic.endGame(winner), 500);
+                                    setTimeout(() => {
+                                        this.playerDisplay.clearGrid();
+                                        this.computerDisplay.clearGrid();
+                                        this.battleLogic.restartGame();
+                                        this.playerDisplay.updateGrid(true);
+                                        this.computerDisplay.updateGrid(false);
+                                        this.setupComputerGridClicks();
+                                    }, 1000)
                             }
                         } else {
                             console.log('Computer turn failed');
@@ -72,6 +89,19 @@ export class EventManager {
                 this.playerDisplay.updateGrid(true);
                 this.computerDisplay.updateGrid(false);
             });
+        } else {
+            this.restartGameBtn = document.createElement('button');
+            this.restartGameBtn.id = 'restartGame';
+            this.restartGameBtn.textContent = 'Restart Game';
+            this.restartGameBtn.className = 'button restart';
+            document.querySelector('.buttons').appendChild(this.restartGameBtn);
+            this.restartGameBtn.addEventListener('click', () => {
+                this.battleLogic.restartGame();
+                this.playerDisplay.clearGrid();
+                this.computerDisplay.clearGrid();
+                this.playerDisplay.updateGrid(true);
+                this.computerDisplay.updateGrid(false);
+            })
         }
     }
 }

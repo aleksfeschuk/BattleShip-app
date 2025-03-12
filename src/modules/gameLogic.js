@@ -67,12 +67,10 @@ export class BattleLogic {
         let row, col, enemyCell;
 
         if (this.lastComputerHit && this.potentialTargets.length > 0) {
-
             const target = this.potentialTargets.shift();
             row = target[0];
             col = target[1];
         } else {
-        
             do {
                 row = Math.floor(Math.random() * 10);
                 col = Math.floor(Math.random() * 10);
@@ -95,8 +93,10 @@ export class BattleLogic {
             this.scores.computer += 10;
             this.lastComputerHit = [row, col];
             this.updatePotentialTargets(row, col);
-        } else if (!this.potentialTargets.length) {
-            this.lastComputerHit = null;
+        } else {
+            if (!this.potentialTargets.length) {
+                this.lastComputerHit = null;
+            }
         }
 
         this.currentTurn = 'player';
@@ -107,7 +107,7 @@ export class BattleLogic {
 
     updatePotentialTargets(row, col) {
         const directions = [
-            [-1, 0], [1, 0], [0, -1], [0, -1]
+            [-1, 0], [1, 0], [0, -1], [0, 1]
         ];
 
         this.potentialTargets = [];
@@ -122,6 +122,10 @@ export class BattleLogic {
                 }
             }
         });
+
+        this.potentialTargets.sort((a, b) => {
+            return Math.random() - 0.5;
+        })
     }
 
 
@@ -154,8 +158,9 @@ export class BattleLogic {
         this.moveHistory = [];
         this.lastComputerHit = null;
         this.potentialTargets = [];
-        this.player.board = new Board();
-        this.computer.board = new Board();
+        this.player.board.reset();
+        this.computer.board.reset();
+        this.initialize();
     }
 
     getGameState() {

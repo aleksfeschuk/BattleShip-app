@@ -20,16 +20,20 @@ export class Ship {
         }
     }
 
+
     hit(row, col) {
         const hitPosition = this.positions.some(([r, c]) => r === row && c === col);
         if (hitPosition) {
             const alreadyHit = this.hitPositions.some(([r, c]) => r === row && c === col);
-            if (!alreadyHit) { 
+            if (alreadyHit) {
+                return false;
+            } else {
                 this.hitPositions.push([row, col]);
                 this.hits++;
+                return true;
             }
-        }
-        return hitPosition;
+        } 
+        return false;
     }
 
     isSunk() {

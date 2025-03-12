@@ -15,4 +15,13 @@ export class Player {
     setEnemyBoard(enemyBoard) {
         this.enemyBoard = enemyBoard;
     }
-}
+
+    // // Add code
+
+    // checkWinner() {
+    //     if (this.enemyBoard && this.enemyBoard.ships.every(ship => ship.isSunk())) {
+    //         return `${this.name} wins`;
+    //     }
+    //     return null;
+    // }
+ }

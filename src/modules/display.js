@@ -50,5 +50,8 @@ export class GameDisplay {
             cell.classList.remove('ship', 'hit', 'miss');
             delete cell.dataset.attacked;
         });
+        if (this.board) {
+            this.board.reset();
+        }
     }
 }
