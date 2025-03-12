@@ -32,6 +32,16 @@ export class Board {
         return true;
     }
 
+    placeAllShips() {
+        try {
+            this.shipSizes.forEach(size => this.placeShip(size));
+        } catch (error) {
+            console.log('Clear board', error.message);
+            this.reset();
+            this.placeAllShips();
+        }
+    }
+
     placeShip(size) {
         const ship = new Ship(size);
         let placed = false;
@@ -50,13 +60,11 @@ export class Board {
             attempts++;
         }
         if (!placed) {
-            throw new Error("Unable to place ship: not enough space");
+            throw new Error("Unable to place ship: not enough space"); 
         }
     }
 
-    placeAllShips() {
-        this.shipSizes.forEach(size => this.placeShip(size));
-    }
+    
 
     getCell(row, col) {
         return this.grid[row][col];
