@@ -1,4 +1,4 @@
-import { Board } from './board.js';
+// import { Board } from './board.js';
 
 export class BattleLogic {
     constructor(player, computer) {
@@ -15,6 +15,10 @@ export class BattleLogic {
 
         this.lastComputerHit = null;
         this.potentialTargets = [];
+
+        //add code
+        this.hitSequence = [];
+        this.unhitCells = [];
     }
 
     initialize() {
@@ -24,6 +28,14 @@ export class BattleLogic {
         this.computer.setEnemyBoard(this.player.board);
         this.gameState = 'setup';
         this.moveHistory = [];
+        this.hitSequence = [];
+        
+        this.unhitCells = [];
+        for (let r = 0; r < 10; r++) {
+            for(let c = 0; c < 10; c++) {
+                this.unhitCells.push([r, c]);
+            }
+        }
     }
 
 
@@ -71,33 +83,41 @@ export class BattleLogic {
             row = target[0];
             col = target[1];
         } else {
-            do {
-                row = Math.floor(Math.random() * 10);
-                col = Math.floor(Math.random() * 10);
-                enemyCell = this.player.board.getCell(row, col);
-            } while (enemyCell?.hitPositions?.some(([r, c]) => r === row && c === col));
-        }
+            const index = Math.floor(Math.random() * this.unhitCells.length);
+            const target = this.unhitCells.splice(index, 1)[0];
+            row = target[0];
+            col = target[1];
+        }   
 
         enemyCell = this.player.board.getCell(row, col);
         const hit = enemyCell?.hit(row, col) || false;
 
-        this.moveHistory.push({
-            player: this.computer.name,
-            row,
-            col,
-            hit,
-            timestamp: Date.now()
-        });
-
         if (hit) {
             this.scores.computer += 10;
             this.lastComputerHit = [row, col];
-            this.updatePotentialTargets(row, col);
+            // add
+            this.hitSequence.push([row, col])
+            this.moveHistory.push({
+                player: this.computer.name,
+                row,
+                col,
+                hit,
+                timestamp: Date.now()
+            });
+            if (enemyCell?.isSunk()) {
+                this.hitSequence = []; 
+                console.log('Hit sequence:', this.hitSequence)
+                this.lastComputerHit = null;
+                this.potentialTargets = [];
+            } else {
+                this.updatePotentialTargets(row, col);
+            }
         } else {
             if (!this.potentialTargets.length) {
                 this.lastComputerHit = null;
             }
         }
+        
 
         this.currentTurn = 'player';
         return { row, col, hit };
@@ -111,21 +131,66 @@ export class BattleLogic {
         ];
 
         this.potentialTargets = [];
-        directions.forEach(([dr, dc]) => {
-            const newRow = row + dr;
-            const newCol = col + dc;
-            if(newRow >= 0 && newRow < 10 && newCol >= 0 && newCol < 10) {
-                const cell = this.player.board.getCell(newRow, newCol);
-                const alreadyHit = cell?.hitPositions?.some(([r, c]) => r === newRow && c === newCol);
-                if (!alreadyHit) {
-                    this.potentialTargets.push([newRow, newCol]);
+        let isHorizontal = false;
+        let isVertical = false;
+        let lastHit = null;
+        let secondLastHit = null;
+        //optimization AI
+        if (this.hitSequence.length >= 2) {
+            lastHit = this.hitSequence[this.hitSequence.length - 1];
+            secondLastHit = this.hitSequence[this.hitSequence.length - 2];
+            isHorizontal = lastHit[0] === secondLastHit[0];
+            isVertical = lastHit[1] === secondLastHit[1];
+
+
+            if (isHorizontal) {
+                if (col - 1 >= 0) {
+                    const cellLeft = this.player.board.getCell(row, col - 1);
+                    const hitLeft = cellLeft?.hitPositions?.some(([r, c]) => r === row && c === col - 1);
+                    if(!hitLeft) this.potentialTargets.push([row, col - 1]);
+                } 
+                if (col + 1 < 10) {
+                    // Same checks for [row, col + 1]
+                }
+                console.log('Working?', this.potentialTargets);
+            } 
+            if (isVertical) {
+                if(row - 1 >= 0) {
+                    // Same checks for [row - 1, col]
+                }
+                if (row, col + 1) {
+                    const cellDown = this.player.board.getCell(row + 1, col);
+                    const hitDown = cellDown?.hitPositions?.some(([r, c]) => r === row + 1 && c === col);
+                    if(!hitDown) this.potentialTargets.push([row, col + 1]);
                 }
             }
-        });
-
-        this.potentialTargets.sort((a, b) => {
-            return Math.random() - 0.5;
-        })
+            if (isHorizontal) {
+                if (col + 1 < 10) {
+                    const cellRight = this.player.board.getCell(row, col + 1);
+                    const hitRight = cellRight?.hitPositions?.some(([r, c]) => r === row && c === col + 1);
+                    if(!hitRight) this.potentialTargets.push([row, col + 1]);
+                }
+            }
+            if (isVertical) {
+                if (row - 1 >= 0) {
+                    const cellUp = this.player.board.getCell(row - 1, col);
+                    const hitUp = cellUp?.hitPositions.some(([r, c]) => r === row - 1 && c === col);
+                    if (!hitUp) this.potentialTargets.push([row - 1, col]);
+                }
+            }
+        } else {
+            directions.forEach(([dr, dc]) => {
+                const newRow = row + dr;
+                const newCol = col + dc;
+                if(newRow >= 0 && newRow < 10 && newCol >= 0 && newCol < 10) {
+                    const cell = this.player.board.getCell(newRow, newCol);
+                    const alreadyHit = cell?.hitPositions?.some(([r, c]) => r === newRow && c === newCol);
+                    if (!alreadyHit) {
+                        this.potentialTargets.push([newRow, newCol]);
+                    }
+                }
+            });
+        }
     }
 
 
