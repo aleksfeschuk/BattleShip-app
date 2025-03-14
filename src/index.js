@@ -3,6 +3,7 @@ import { BattleLogic } from "./modules/gameLogic.js";
 import { EventManager } from "./modules/eventsHandlers.js";
 import { Player } from "./modules/player.js";
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const playerGrid = document.querySelector('.player-grid');
     const computerGrid = document.querySelector('.computer-grid');

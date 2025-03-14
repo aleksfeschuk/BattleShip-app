@@ -161,7 +161,7 @@ export class BattleLogic {
                 if (row + 1 < 10) {
                     const cellDown = this.player.board.getCell(row + 1, col);
                     const hitDown = cellDown?.hitPositions?.some(([r, c]) => r === row + 1 && c === col);
-                    if(!hitDown) this.potentialTargets.push([row, col + 1]);
+                    if(!hitDown) this.potentialTargets.push([row + 1, col]);
                 }
             }
             if (isHorizontal) {
