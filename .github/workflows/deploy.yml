@@ -20,7 +20,6 @@ jobs:
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+        deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
         publish_dir: ./dist
-        external_repository: aleksfeschuk/BattleShip-app
         publish_branch: gh-pages
