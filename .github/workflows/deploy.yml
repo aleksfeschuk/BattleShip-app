@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: npm install
     - name: Build and copy index.html
-      run: npm run build && cp src/index.html dist/
+      run: npm run build && cp index.html dist/
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
