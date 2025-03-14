@@ -1,7 +1,8 @@
-import { GameDisplay } from "./modules/display.js";
-import { BattleLogic } from "./modules/gameLogic.js";
-import { EventManager } from "./modules/eventsHandlers.js";
-import { Player } from "./modules/player.js";
+import './css/style.css';
+import  GameDisplay  from "./modules/display.js";
+import  BattleLogic  from "./modules/gameLogic.js";
+import  EventManager  from "./modules/eventsHandlers.js";
+import  Player  from "./modules/player.js";
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const eventManager = new EventManager(playerDisplay, computerDisplay, battleLogic);
 
 
-    
     try {
         eventManager.setupListeners();
     } catch (error) {

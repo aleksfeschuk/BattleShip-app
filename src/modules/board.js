@@ -1,6 +1,6 @@
-import { Ship } from './ship.js';
+import  Ship  from './ship.js';
 
-export class Board {
+export default class Board {
     constructor(shipSizes = [5, 4, 3, 2, 2]) {
         this.grid = Array(10).fill().map(() => Array(10).fill(null));
         this.ships = [];

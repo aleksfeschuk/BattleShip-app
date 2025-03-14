@@ -1,4 +1,4 @@
-export class EventManager {
+export default class EventManager {
     constructor(playerDisplay, computerDisplay, battleLogic) {
         this.playerDisplay = playerDisplay;
         this.computerDisplay = computerDisplay;

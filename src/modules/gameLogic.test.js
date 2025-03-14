@@ -1,4 +1,4 @@
-const { BattleLogic } = require('../modules/gameLogic.js');
+import { BattleLogic } from '../modules/gameLogic.js';
 
 describe('BattleLogic', () => {
     let game, player, computer;

@@ -15,8 +15,8 @@ jobs:
         node-version: '20'
     - name: Install dependencies
       run: npm install
-    - name: Build and copy index.html
-      run: npm run build && cp index.html dist/
+    - name: Build
+      run: npm run build
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:

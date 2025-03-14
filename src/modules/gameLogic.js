@@ -1,6 +1,6 @@
 // import { Board } from './board.js';
 
-export class BattleLogic {
+export  default class BattleLogic {
     constructor(player, computer) {
         this.player = player;
         this.computer = computer;

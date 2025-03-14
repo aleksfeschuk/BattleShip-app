@@ -1,6 +1,6 @@
-import { Board } from "./board.js";
+import  Board  from "./board.js";
 
-export class Player {
+export default class Player {
     constructor(name, isComputer = false) {
         this.name = name;
         this.isComputer = isComputer;

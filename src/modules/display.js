@@ -1,6 +1,6 @@
-import { Ship } from "./ship.js";
+import  Ship  from "./ship.js";
 
-export class GameDisplay {
+export default class GameDisplay {
     constructor(gridElement, board) {
         this.gridElement = gridElement;
         this.board = board;
