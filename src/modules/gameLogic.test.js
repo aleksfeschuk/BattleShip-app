@@ -4,11 +4,10 @@ describe('BattleLogic', () => {
     let game, player, computer;
 
     beforeEach(() => {
-        // Mock board with reset method
         const mockBoard = {
             ships: [],
             getCell: jest.fn(),
-            reset: jest.fn(), // Ensure reset is mocked
+            reset: jest.fn(), 
         };
         player = {
             name: 'Player',
