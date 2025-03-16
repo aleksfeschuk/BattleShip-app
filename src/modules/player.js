@@ -21,7 +21,4 @@ export default class Player {
     // checkWinner() {
     //     if (this.enemyBoard && this.enemyBoard.ships.every(ship => ship.isSunk())) {
     //         return `${this.name} wins`;
-    //     }
-    //     return null;
-    // }
  }
