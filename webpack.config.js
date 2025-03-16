@@ -14,7 +14,7 @@ export default {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: isProduction ? '/BattleShip-app/' : '/',
+        publicPath: isProduction ? '/' : '/',
         clean: true,
         assetModuleFilename: 'images/[name][ext]',
     },
@@ -50,7 +50,7 @@ export default {
     plugins: [
         new HtmlWebpackPlugin({
             template: './src/index.html',
-            publicPath: isProduction ? '/BattleShip-app/' : '/',
+            publicPath: isProduction ? '/' : '/',
         }),
         new CopyPlugin({
             patterns: [
