@@ -16,5 +16,5 @@ export default class Player {
         this.enemyBoard = enemyBoard;
     }
 
-    
+    // Comments
  }
