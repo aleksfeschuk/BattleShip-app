@@ -14,7 +14,7 @@ export default {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/BattleShip-App',
+        publicPath: '/BattleShip-app',
         clean: true,
         assetModuleFilename: 'images/[name][ext]',
     },
